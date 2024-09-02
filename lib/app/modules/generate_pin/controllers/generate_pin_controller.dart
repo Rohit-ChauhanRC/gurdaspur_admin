@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:gurdaspur_admin/app/modules/utils/contants.dart';
 import 'package:gurdaspur_admin/app/modules/utils/utils.dart';
 import 'package:http/http.dart' as http;
 
@@ -20,6 +21,10 @@ class GeneratePinController extends GetxController {
   bool get circularProgress => _circularProgress.value;
   set circularProgress(bool v) => _circularProgress.value = v;
 
+  final RxInt _userId = 0.obs;
+  int get userId => _userId.value;
+  set userId(int i) => _userId.value = i;
+
   @override
   void onInit() {
     super.onInit();
@@ -28,6 +33,7 @@ class GeneratePinController extends GetxController {
   @override
   void onReady() {
     super.onReady();
+    userId = Get.arguments[0];
   }
 
   @override
@@ -48,8 +54,13 @@ class GeneratePinController extends GetxController {
     circularProgress = false;
     try {
       var res = await http.post(
-          Uri.parse("http://app.maklife.in:7003/api/pinmaster"),
-          body: {"CenterId": username, "PinNo": pinCode});
+        Uri.parse("$baseUrl/Pinmaster"),
+        body: {
+          "CenterId": username,
+          "PinNo": pinCode,
+          "UserId": userId.toString(),
+        },
+      );
       final a = jsonDecode(res.body);
 
       if (res.statusCode == 200) {

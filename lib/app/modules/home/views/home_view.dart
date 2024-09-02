@@ -16,45 +16,54 @@ class HomeView extends GetView<HomeController> {
         title: const Text('Home'),
         centerTitle: true,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
+      body: Container(
+        alignment: Alignment.center,
+        padding: const EdgeInsets.all(16),
         child: Column(
+          // mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
               height: 150.h,
               width: 200.w,
               margin: EdgeInsets.only(top: 20.h),
               child: Image.asset(
-                "assets/images/logo.jpg",
+                "assets/images/logo.png",
                 fit: BoxFit.fill,
                 // height: Get.height * 0.5,
-                alignment: Alignment.topCenter,
+                alignment: Alignment.center,
                 scale: 1,
               ),
             ),
             SizedBox(
               height: 50.h,
             ),
-            ElevatedButton(
-              onPressed: () {
-                Get.toNamed(Routes.GENERATE_PIN);
-              },
-              child: const Text(
-                "Pin Generate",
-                style: TextStyle(color: AppColors.white),
-              ),
+            Obx(
+              () => controller.flag == "P"
+                  ? SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Get.toNamed(Routes.GENERATE_PIN,
+                              arguments: [controller.userId]);
+                        },
+                        child: const Text(
+                          "Pin Generate",
+                          style: TextStyle(color: AppColors.white),
+                        ),
+                      ),
+                    )
+                  : ElevatedButton(
+                      onPressed: () {
+                        Get.toNamed(Routes.FRANCHISE,
+                            arguments: [controller.userId]);
+                      },
+                      child: const Text(
+                        "Franchise Activation / Deactivation",
+                        style: TextStyle(color: AppColors.white),
+                      ),
+                    ),
             ),
-            SizedBox(
-              height: 50.h,
-            ),
-            ElevatedButton(
-                onPressed: () {
-                  Get.toNamed(Routes.FRANCHISE);
-                },
-                child: const Text(
-                  "Franchise Activation / Deactivation",
-                  style: TextStyle(color: AppColors.white),
-                )),
           ],
         ),
       ),

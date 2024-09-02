@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:gurdaspur_admin/app/modules/utils/contants.dart';
 
 import 'package:gurdaspur_admin/app/modules/utils/utils.dart';
 import 'package:http/http.dart' as http;
@@ -26,6 +27,10 @@ class FranchiseController extends GetxController {
   bool get circularProgress => _circularProgress.value;
   set circularProgress(bool v) => _circularProgress.value = v;
 
+  final RxInt _userId = 0.obs;
+  int get userId => _userId.value;
+  set userId(int i) => _userId.value = i;
+
   final count = 0.obs;
   @override
   void onInit() {
@@ -35,6 +40,7 @@ class FranchiseController extends GetxController {
   @override
   void onReady() {
     super.onReady();
+    userId = Get.arguments[0];
   }
 
   @override
@@ -55,7 +61,7 @@ class FranchiseController extends GetxController {
   fetchData() async {
     try {
       var res = await http.get(
-        Uri.parse("http://Plant.Maklife.in:6019/Api/CustomerName?ID=$centerId"),
+        Uri.parse("$baseUrl/CustomerName?Id=$centerId&userId=$userId"),
       );
       final a = jsonDecode(res.body);
 
@@ -80,9 +86,13 @@ class FranchiseController extends GetxController {
     circularProgress = false;
     try {
       var res = await http.post(
-          Uri.parse(
-              "http://Plant.Maklife.in:6019/Api/CustomerStatus/Updatestatus"),
-          body: {"Id": centerId, "Status": active});
+        Uri.parse("$baseUrl/UpdateStatus"),
+        body: {
+          "Id": centerId,
+          "Status": active,
+          "userId": userId,
+        },
+      );
       final a = jsonDecode(res.body);
 
       if (res.statusCode == 200) {

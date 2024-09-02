@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:get/get.dart';
@@ -29,7 +30,7 @@ class GeneratePinView extends GetView<GeneratePinController> {
                   width: 200.w,
                   margin: EdgeInsets.only(top: 20.h),
                   child: Image.asset(
-                    "assets/images/logo.jpg",
+                    "assets/images/logo.png",
                     fit: BoxFit.fill,
                     // height: Get.height * 0.5,
                     alignment: Alignment.topCenter,
@@ -98,6 +99,9 @@ class GeneratePinView extends GetView<GeneratePinController> {
                         maxLength: 4,
                         validator: (val) =>
                             val!.length < 3 ? "Field is required!" : null,
+                        inputFormatters: [
+                          LengthLimitingTextInputFormatter(4),
+                        ],
                       ),
                     )),
                 SizedBox(
