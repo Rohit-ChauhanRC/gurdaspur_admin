@@ -105,17 +105,19 @@ class LoginView extends GetView<LoginController> {
             SizedBox(
               height: 20.h,
             ),
-            Container(
-              width: Get.width,
-              // padding: const EdgeInsets.all(20),
-              margin: EdgeInsets.only(top: 15.h, left: 35.w, right: 35.w),
-              child: CustomButton(
-                onPressed: () {
-                  controller.login();
-                },
-                title: "Login",
-              ),
-            ),
+            Obx(() => controller.circularProgress
+                ? Container(
+                    width: Get.width,
+                    // padding: const EdgeInsets.all(20),
+                    margin: EdgeInsets.only(top: 15.h, left: 35.w, right: 35.w),
+                    child: CustomButton(
+                      onPressed: () {
+                        controller.login();
+                      },
+                      title: "Login",
+                    ),
+                  )
+                : const CircularProgressIndicator()),
             SizedBox(
               height: 20.h,
             ),

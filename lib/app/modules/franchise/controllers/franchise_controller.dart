@@ -9,7 +9,7 @@ import 'package:http/http.dart' as http;
 
 class FranchiseController extends GetxController {
   //
-  GlobalKey<FormState> loginFormKey = GlobalKey();
+  GlobalKey<FormState> activateFormKey = GlobalKey();
 
   final RxString _centerId = ''.obs;
   String get centerId => _centerId.value;
@@ -46,12 +46,17 @@ class FranchiseController extends GetxController {
   @override
   void onClose() {
     super.onClose();
+    _centerId.close();
+    _circularProgress.close();
+    _userId.close();
+    _act.close();
+    _response.close();
   }
 
   // void increment() => count.value++;
   loginCred() async {
     Utils.closeKeyboard();
-    if (!loginFormKey.currentState!.validate()) {
+    if (!activateFormKey.currentState!.validate()) {
       return null;
     }
     circularProgress = false;
@@ -80,7 +85,7 @@ class FranchiseController extends GetxController {
 
   activateF(String active) async {
     Utils.closeKeyboard();
-    if (!loginFormKey.currentState!.validate()) {
+    if (!activateFormKey.currentState!.validate()) {
       return null;
     }
     circularProgress = false;
@@ -90,7 +95,7 @@ class FranchiseController extends GetxController {
         body: {
           "Id": centerId,
           "Status": active,
-          "userId": userId,
+          "UserId": userId.toString(),
         },
       );
       final a = jsonDecode(res.body);

@@ -40,7 +40,7 @@ class ResetPasswordView extends GetView<ResetPasswordController> {
             Container(
               margin: EdgeInsets.only(top: 10.h, left: 35.w, right: 35.w),
               child: Form(
-                key: controller.loginFormKey,
+                key: controller.resetFormKey,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -143,7 +143,7 @@ class ResetPasswordView extends GetView<ResetPasswordController> {
                           width: 10.w,
                         ),
                         Obx(
-                          () => Text(DateFormat("MM/dd/yyyy")
+                          () => Text(DateFormat("ddMMMyyyy")
                               .format(DateTime.parse(controller.fromDate))),
                         ),
                       ],

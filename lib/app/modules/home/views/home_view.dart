@@ -8,11 +8,12 @@ import 'package:gurdaspur_admin/app/theme/app_colors.dart';
 import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
-  const HomeView({Key? key}) : super(key: key);
+  const HomeView({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: const Text('Home'),
         centerTitle: true,
       ),
@@ -53,17 +54,33 @@ class HomeView extends GetView<HomeController> {
                         ),
                       ),
                     )
-                  : ElevatedButton(
-                      onPressed: () {
-                        Get.toNamed(Routes.FRANCHISE,
-                            arguments: [controller.userId]);
-                      },
-                      child: const Text(
-                        "Franchise Activation / Deactivation",
-                        style: TextStyle(color: AppColors.white),
+                  : SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Get.toNamed(Routes.FRANCHISE,
+                              arguments: [controller.userId]);
+                        },
+                        child: const Text(
+                          "Franchise Activation / Deactivation",
+                          style: TextStyle(color: AppColors.white),
+                        ),
                       ),
                     ),
             ),
+            const Spacer(),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () {
+                  Get.offAllNamed(Routes.LOGIN);
+                },
+                child: const Text(
+                  "Logout",
+                  style: TextStyle(color: AppColors.white),
+                ),
+              ),
+            )
           ],
         ),
       ),

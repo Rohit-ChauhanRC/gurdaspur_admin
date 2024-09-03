@@ -19,7 +19,7 @@ class FranchiseView extends GetView<FranchiseController> {
       body: Padding(
         padding: const EdgeInsets.all(10.0),
         child: Form(
-            key: controller.loginFormKey,
+            key: controller.activateFormKey,
             child: Column(
               children: [
                 Align(
@@ -33,11 +33,11 @@ class FranchiseView extends GetView<FranchiseController> {
                   height: 10.h,
                 ),
                 Obx(() => SizedBox(
-                      // width: Get.width * 0.7,
+                      // width: double.infinity,
                       // height: 65.h,
                       child: TextFormWidget(
                         prefix: const Icon(
-                          Icons.person_4_sharp,
+                          Icons.search,
                           size: 30,
                         ),
                         initialValue: controller.centerId,
@@ -55,41 +55,49 @@ class FranchiseView extends GetView<FranchiseController> {
                   height: 10.h,
                 ),
                 controller.circularProgress
-                    ? ElevatedButton(
-                        onPressed: () {
-                          controller.loginCred();
-                        },
-                        child: const Text(
-                          "Search",
-                          style: TextStyle(color: AppColors.white),
-                        ))
+                    ? SizedBox(
+                        width: double.infinity,
+                        child: ElevatedButton(
+                            onPressed: () {
+                              controller.loginCred();
+                            },
+                            child: const Text(
+                              "Search",
+                              style: TextStyle(color: AppColors.white),
+                            )),
+                      )
                     : const Center(
                         child: CircularProgressIndicator(),
                       ),
                 Obx(() => controller.response.isNotEmpty
                     ? controller.response == "No record found"
                         ? Text(controller.response)
-                        : Card(
-                            elevation: 10,
-                            color: AppColors.darkBrown,
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Column(
-                                children: [
-                                  Text(controller.response),
-                                  ElevatedButton(
-                                      onPressed: () {
-                                        controller.activateF(
-                                            controller.act == "A" ? "Z" : "A");
-                                      },
-                                      child: Text(
-                                        controller.act == "A"
-                                            ? "Deactivate"
-                                            : "Activate",
-                                        style: const TextStyle(
-                                            color: AppColors.white),
-                                      ))
-                                ],
+                        : SizedBox(
+                            width: double.infinity,
+                            child: Card(
+                              elevation: 10,
+                              color: AppColors.darkBrown,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  children: [
+                                    Text(controller.response),
+                                    ElevatedButton(
+                                        onPressed: () {
+                                          controller.activateF(
+                                              controller.act == "A"
+                                                  ? "Z"
+                                                  : "A");
+                                        },
+                                        child: Text(
+                                          controller.act == "A"
+                                              ? "Deactivate"
+                                              : "Activate",
+                                          style: const TextStyle(
+                                              color: AppColors.white),
+                                        ))
+                                  ],
+                                ),
                               ),
                             ),
                           )

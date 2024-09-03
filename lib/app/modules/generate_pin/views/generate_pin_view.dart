@@ -21,7 +21,7 @@ class GeneratePinView extends GetView<GeneratePinController> {
         child: Padding(
           padding: const EdgeInsets.all(10.0),
           child: Form(
-            key: controller.loginFormKey,
+            key: controller.pinFormKey,
             child: Column(
               // mainAxisAlignment: MainAxisAlignment.center,
               children: [

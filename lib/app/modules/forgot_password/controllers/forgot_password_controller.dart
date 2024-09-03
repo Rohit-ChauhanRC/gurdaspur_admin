@@ -7,7 +7,7 @@ import 'package:gurdaspur_admin/app/routes/app_pages.dart';
 import 'package:http/http.dart' as http;
 
 class ForgotPasswordController extends GetxController {
-  GlobalKey<FormState> loginFormKey = GlobalKey();
+  GlobalKey<FormState> forgotFormKey = GlobalKey();
 
   final RxBool _circularProgress = true.obs;
   bool get circularProgress => _circularProgress.value;
@@ -25,9 +25,9 @@ class ForgotPasswordController extends GetxController {
   String get password => _password.value;
   set password(String mob) => _password.value = mob;
 
-  // final RxList<LoginModel> _loginModel = RxList<LoginModel>();
-  // List<LoginModel> get loginModel => _loginModel;
-  // set loginModel(List<LoginModel> lst) => _loginModel.assignAll(lst);
+  final RxInt _id = 0.obs;
+  int get id => _id.value;
+  set id(int i) => _id.value = i;
 
   @override
   void onInit() async {
@@ -37,16 +37,22 @@ class ForgotPasswordController extends GetxController {
   @override
   void onReady() {
     super.onReady();
+    id = Get.arguments[0];
   }
 
   @override
   void onClose() {
     super.onClose();
+    _check.close();
+    _circularProgress.close();
+    _id.close();
+    _password.close();
+    _username.close();
   }
 
   Future<dynamic> login() async {
     Utils.closeKeyboard();
-    if (!loginFormKey.currentState!.validate()) {
+    if (!forgotFormKey.currentState!.validate()) {
       return null;
     }
 
@@ -63,7 +69,7 @@ class ForgotPasswordController extends GetxController {
     circularProgress = false;
     try {
       var res = await http.post(Uri.parse("$baseUrl/UpdatePassword"), body: {
-        "UserId": "1",
+        "UserId": id.toString(),
         "Password": password,
       });
 

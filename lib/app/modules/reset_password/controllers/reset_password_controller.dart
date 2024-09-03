@@ -10,7 +10,7 @@ import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 
 class ResetPasswordController extends GetxController {
-  GlobalKey<FormState> loginFormKey = GlobalKey();
+  GlobalKey<FormState> resetFormKey = GlobalKey();
 
   final RxBool _circularProgress = true.obs;
   bool get circularProgress => _circularProgress.value;
@@ -49,11 +49,16 @@ class ResetPasswordController extends GetxController {
   @override
   void onClose() {
     super.onClose();
+    _check.close();
+    _circularProgress.close();
+    _fromDate.close();
+    _password.close();
+    _username.close();
   }
 
   Future<dynamic> login() async {
     Utils.closeKeyboard();
-    if (!loginFormKey.currentState!.validate()) {
+    if (!resetFormKey.currentState!.validate()) {
       return null;
     }
 
@@ -73,7 +78,7 @@ class ResetPasswordController extends GetxController {
     try {
       var res = await http.post(Uri.parse("$baseUrl/ForgetPassword"), body: {
         "Username": username.trim(),
-        "Dob": DateFormat("MM/dd/yyyy").format(DateTime.parse(fromDate)),
+        "Dob": DateFormat("ddMMMyyyy").format(DateTime.parse(fromDate)),
         "Adharno": password.trim(),
       });
       final a = jsonDecode(res.body);
@@ -81,15 +86,17 @@ class ResetPasswordController extends GetxController {
       if (res.statusCode == 200) {
         // loginModel.assignAll(loginModelFromMap(res.body));
 
-        // if (loginModel.isNotEmpty) {
-
-        Get.toNamed(
-          Routes.FORGOT_PASSWORD,
-          arguments: res.body,
-        );
-        // } else {
-        //   Utils.showDialog("Please check username and password!");
-        // }
+        if (jsonDecode(res.body) == "User does not exists ?") {
+          Utils.showDialog(res.body);
+        } else if (jsonDecode(res.body) ==
+            "Date of birth and Adhaar mismatch ?") {
+          Utils.showDialog(res.body);
+        } else {
+          Get.toNamed(
+            Routes.FORGOT_PASSWORD,
+            arguments: [jsonDecode(res.body)],
+          );
+        }
       } else {
         //
         Utils.showDialog(json.decode(res.body));

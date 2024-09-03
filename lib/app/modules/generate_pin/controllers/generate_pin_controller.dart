@@ -7,7 +7,7 @@ import 'package:gurdaspur_admin/app/modules/utils/utils.dart';
 import 'package:http/http.dart' as http;
 
 class GeneratePinController extends GetxController {
-  GlobalKey<FormState> loginFormKey = GlobalKey();
+  GlobalKey<FormState> pinFormKey = GlobalKey();
 
   final RxString _username = ''.obs;
   String get username => _username.value;
@@ -42,13 +42,14 @@ class GeneratePinController extends GetxController {
     _circularProgress.close();
     _pinCode.close();
     _username.close();
+    _userId.close();
   }
 
   // void increment() => count.value++;
 
   loginCred() async {
     Utils.closeKeyboard();
-    if (!loginFormKey.currentState!.validate()) {
+    if (!pinFormKey.currentState!.validate()) {
       return null;
     }
     circularProgress = false;

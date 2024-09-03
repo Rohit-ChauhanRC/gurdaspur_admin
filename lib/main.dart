@@ -16,7 +16,7 @@ void main() async {
         splitScreenMode: true,
         builder: (_, child) {
           return GetMaterialApp(
-            title: "Gurdaspur Admin",
+            title: "Admin",
             initialRoute: AppPages.INITIAL,
             getPages: AppPages.routes,
             theme: AppTheme.theme,

@@ -45,6 +45,11 @@ class LoginController extends GetxController {
   @override
   void onClose() {
     super.onClose();
+    _loginModel.close();
+    _password.close();
+    _username.close();
+    _check.close();
+    _circularProgress.close();
   }
 
   Future<dynamic> login() async {
@@ -54,7 +59,7 @@ class LoginController extends GetxController {
     }
 
     if (username == "admin" && password == "admin") {
-      Get.toNamed(
+      Get.offAllNamed(
         Routes.HOME,
       );
     } else {
@@ -78,7 +83,7 @@ class LoginController extends GetxController {
         loginModel.assignAll(userModelFromMap(res.body));
 
         if (loginModel.isNotEmpty) {
-          Get.toNamed(Routes.HOME, arguments: [
+          Get.offAllNamed(Routes.HOME, arguments: [
             loginModel.first.userId,
             loginModel.first.employeeName,
             loginModel.first.flag,

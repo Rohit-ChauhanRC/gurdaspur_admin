@@ -37,7 +37,7 @@ class ForgotPasswordView extends GetView<ForgotPasswordController> {
             Container(
               margin: EdgeInsets.only(top: 10.h, left: 35.w, right: 35.w),
               child: Form(
-                key: controller.loginFormKey,
+                key: controller.forgotFormKey,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -60,9 +60,9 @@ class ForgotPasswordView extends GetView<ForgotPasswordController> {
                               Icons.person_4_sharp,
                               size: 30,
                             ),
-                            initialValue: controller.username,
+                            initialValue: controller.password,
                             label: "Please enter Username...",
-                            onChanged: (val) => controller.username = val,
+                            onChanged: (val) => controller.password = val,
                             keyboardType: TextInputType.text,
                             // maxLength: 10,
                             validator: (val) =>
